@@ -109,8 +109,8 @@ body {
     display: block;
     margin: 20px auto;
     padding: 10px 20px;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #374F6B;
+    color: #ffffff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -118,7 +118,8 @@ body {
 }
 
 .btn-main:hover {
-    background-color: #374F6B;
+    background-color: #ffffff;
+    color: #374F6B;
 }
 
 
@@ -198,6 +199,34 @@ th {
     width: 24px;
     height: 24px;
     cursor: pointer;
+}
+
+
+/* Popup styles untuk Identitas Mahasiswa */
+
+.popup-content p {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    /* Ukuran font identitas mahasiswa */
+    margin: 5px 0;
+}
+
+.popup-content p .label {
+    font-weight: normal;
+    width: 130px;
+    color: #333;
+}
+
+.popup-content p .value {
+    font-weight: normal;
+    color: #666;
+    flex-grow: 1;
+}
+
+.popup-content p:last-child {
+    margin-bottom: 30px;
+    /* Memberi jarak di bawah identitas mahasiswa */
 }
 
 
