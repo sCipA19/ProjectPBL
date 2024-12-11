@@ -1,0 +1,55 @@
+.sidebar {
+    width: 20%;
+    background-color: #DEE5D4;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav-link {
+    color: #333;
+    margin: 10px 0;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    font-weight: bold;
+    color: #007bff;
+    background-color: #cfe8ff;
+}
+
+.card {
+    background-color: #e7f3ff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+th {
+    background-color: #4A628A !important;
+    color: white;
+}
+
+#main-content {
+    width: 80%;
+    padding: 20px;
+    background: linear-gradient(to bottom, #DFF2EB, #4A628A);
+    overflow-y: auto;
+}
