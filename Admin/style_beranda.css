@@ -18,13 +18,17 @@
 }
 
 .card {
-    background-color: #e7f3ff;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
+    width: 90%; /* Perbesar lebar card menjadi 90% dari kontainer */
+    max-width: 1200px; /* Tingkatkan batas maksimum untuk mendukung layar besar */
+    margin: 30px auto; /* Tambahkan margin dan center card */
+    padding: 30px; /* Perbesar padding untuk ruang lebih luas */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Perbesar shadow untuk estetika */
+    background-color: #e7f3ff; /* Warna tetap kontras */
+    border-radius: 10px; /* Tambahkan border-radius untuk tampilan lebih modern */
 }
+
+
+
 
 .table {
     border-collapse: collapse;
@@ -52,4 +56,11 @@ th {
     padding: 20px;
     background: linear-gradient(to bottom, #DFF2EB, #4A628A);
     overflow-y: auto;
+}
+.form-control {
+    width: 100%; /* Mengurangi lebar input ke 50% */
+    max-width: 800px; /* Batas maksimum lebar input */
+    padding: 5px; /* Mengurangi padding */
+    font-size: 14px; /* Ukuran font lebih kecil */
+    margin: 5px 0; /* Memberikan sedikit margin antar input */
 }
