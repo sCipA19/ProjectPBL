@@ -3,11 +3,11 @@ session_start();
 
 // Mengecek apakah pengguna sudah login
 if (!isset($_SESSION['username'])) {
-    header("Location: ../index.php");
+    header("Location: ../index2.php");
     exit();
 }
 
-$serverName = "BEBI\DBMS22"; // Ganti dengan nama server Anda
+$serverName = "BEBI\\DBMS22"; // Ganti dengan nama server Anda
 $database = "PBL"; // Ganti dengan nama database Anda
 $username = ""; // Kosongkan karena menggunakan Windows Authentication
 $password = ""; // Kosongkan karena menggunakan Windows Authentication
@@ -17,11 +17,11 @@ try {
     $conn = new PDO("sqlsrv:Server=$serverName;Database=$database", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Query untuk mengambil data biodata mahasiswa
-    $sql = "SELECT * FROM tb_pelanggaran"; // Ganti dengan nama tabel yang sesuai
+    // Query untuk mengambil data dari tb_kelolatatib
+    $sql = "SELECT * FROM tb_kelolatatib";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
-    $mahasiswa = $stmt->fetchAll(); // Mengambil semua data mahasiswa
+    $tatib = $stmt->fetchAll(); // Mengambil semua data dari tabel
 } catch (PDOException $e) {
     die("Koneksi gagal: " . $e->getMessage());
 }
@@ -64,13 +64,19 @@ try {
                             <i class="bi bi-gear me-2"></i>Kelola Tata Tertib
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="bi bi-bell me-2"></i>Notifikasi Mahasiswa
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link" onclick="toggleDropdown()">
+                            <i class="bi bi-bell me-2"></i>Notifikasi
                         </a>
+                        <div class="dropdown-container" id="dropdownMenu">
+                            <ul class="notification-list">
+                                <li><a href="notifikasidosen.php">Notifikasi dari Dosen</a></li>
+                                <li><a href="notifikasimahasiswa.php">Notifikasi Mahasiswa</a></li>
+                            </ul>
+                        </div>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="logout.php" class="nav-link">
                             <i class="bi bi-box-arrow-right me-2"></i>Logout
                         </a>
                     </li>
@@ -79,39 +85,73 @@ try {
 
             <!-- Main Content -->
             <div class="col-md-9 p-4" id="main-content">
-                <h2>Selamat Datang</h2>
-                <p>di sistem Anukrama. Pilih menu di sidebar untuk mulai mengelola tata tertib, pelanggaran, dan
-                    notifikasi</p>
-                    
+    <h2>Data Tata Tertib</h2>
+    <p>Berikut adalah data tata tertib yang dikelola:</p>
 
-                <!-- Tabel Mahasiswa -->
-                <h4>Mahasiswa</h4>
-                <table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>No.</th>
-            <th>NIM</th>
-            <th>Nama Mahasiswa</th>
-            <th>Kelas</th>
-            <th>Pelanggaran</th>
-            <th>Tingkat</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        $no = 1; // Variabel untuk nomor urut
-        foreach ($mahasiswa as $row) {
-            echo "<tr>";
-            echo "<td>" . $no++ . "</td>";
-            echo "<td>" . htmlspecialchars($row['nim']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['nama_mahasiswa']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['kelas']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['pelanggaran']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['tingkat']) . "</td>";
-            echo "<td><span class='badge bg-success'>Selesai</span></td>";
-            echo "</tr>";
+    <!-- Tabel Tata Tertib -->
+    <h4>Tata Tertib</h4>
+    <div class="table-wrapper" style="max-height: 550px; overflow-y: auto;">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>NIM</th>
+                    <th>Nama Mahasiswa</th>
+                    <th>Kelas</th>
+                    <th>Pelanggaran</th>
+                    <th>Tingkat</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $no = 1; // Variabel untuk nomor urut
+                foreach ($tatib as $row) {
+                    echo "<tr>";
+                    echo "<td>" . $no++ . "</td>";
+                    echo "<td>" . htmlspecialchars($row['nim']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['nama_mahasiswa']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['kelas']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['pelanggaran']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['tingkat']) . "</td>";
+
+                    // Menentukan status berdasarkan status_id
+                    if ($row['status_id'] == 3) {
+                        $status = "<span class='badge bg-success'>Selesai</span>";
+                    } elseif ($row['tingkat'] === 'Rendah') {
+                        $status = "<span class='badge bg-success'>Selesai</span>";
+                    } elseif ($row['tingkat'] === 'Sedang') {
+                        $status = "<span class='badge bg-warning'>Proses</span>";
+                    } else {
+                        $status = "<span class='badge bg-danger'>Belum Selesai</span>";
+                    }
+
+                    echo "<td>" . $status . "</td>";
+                    echo "</tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+    </div>
+
+    <script>
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdownMenu");
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
         }
-        ?>
-    </tbody>
-</table>
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.nav-link')) {
+                const dropdown = document.getElementById("dropdownMenu");
+                if (dropdown.style.display === "block") {
+                    dropdown.style.display = "none";
+                }
+            }
+        };
+    </script>
+</body>
+
+</html>

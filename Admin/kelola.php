@@ -3,11 +3,11 @@ session_start();
 
 // Mengecek apakah pengguna sudah login
 if (!isset($_SESSION['username'])) {
-    header("Location: ../index.php");
+    header("Location: ../index2.php");
     exit();
 }
 
-$serverName = "BEBI\\DBMS22"; // Ganti dengan nama server Anda
+$serverName = "BEBI\\DBMS22"; // Ganti dengan nama server
 $database = "PBL"; // Ganti dengan nama database Anda
 $username = ""; // Kosongkan karena menggunakan Windows Authentication
 $password = ""; // Kosongkan karena menggunakan Windows Authentication
@@ -18,11 +18,10 @@ try {
     echo "";
 
     // Query untuk mengambil data biodata mahasiswa
-    $sql = "SELECT id_tatib, nama_mahasiswa, nim, kelas, pelanggaran, tingkat FROM tb_kelolatatib";
+    $sql = "SELECT id_tatib, nim, nama_mahasiswa, kelas, pelanggaran, tingkat FROM tb_kelolatatib";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $mahasiswa = $stmt->fetchAll();
-    
 } catch (PDOException $e) {
     die("Koneksi gagal: " . $e->getMessage());
 }
@@ -92,13 +91,19 @@ try {
                             <i class="bi bi-gear me-2"></i>Kelola Tata Tertib
                         </a>
                     </li>
+                    <li class="nav-item dropdown">
+            <a href="#" class="nav-link" onclick="toggleDropdown()">
+                <i class="bi bi-bell me-2"></i>Notifikasi
+            </a>
+            <div class="dropdown-container" id="dropdownMenu">
+                <ul class="notification-list">
+                    <li><a href="notifikasidosen.php">Notifikasi dari Dosen</a></li>
+                    <li><a href="notifikasimahasiswa.php">Notifikasi Mahasiswa</a></li>
+                </ul>
+            </div>
+        </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="bi bi-bell me-2"></i>Notifikasi Mahasiswa
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="logout.php" class="nav-link">
                             <i class="bi bi-box-arrow-right me-2"></i>Logout
                         </a>
                     </li>
@@ -116,43 +121,57 @@ try {
                 </a>
 
                 <!-- Violation Table -->
-                <div class="table-responsive mt-4">
-                <table class="table table-bordered" id="violationTable">
-    <thead>
-        <tr>
-            <th>No.</th>
-            <th>Nama Mahasiswa</th>
-            <th>NIM</th>
-            <th>Kelas</th>
-            <th>Pelanggaran</th>
-            <th>Tingkat Pelanggaran</th>
-            <th>Aksi</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($mahasiswa as $index => $data): ?>
+                <div class="table-responsive mt-4" style="max-height: 400px; overflow-y: auto;">
+    <table class="table table-bordered" id="violationTable">
+        <thead>
             <tr>
-                <td><?= $index + 1 ?></td>
-                <td><?= htmlspecialchars($data['nama_mahasiswa']) ?></td>
-                <td><?= htmlspecialchars($data['nim']) ?></td>
-                <td><?= htmlspecialchars($data['kelas']) ?></td>
-                <td><?= htmlspecialchars($data['pelanggaran']) ?></td>
-                <td><?= htmlspecialchars($data['tingkat']) ?></td>
-                <td><?= htmlspecialchars($data['tingkat']) ?></td>
-                <td>
-                    <a href="edit.php?id=<?= $data['id_tatib'] ?>" class="text-primary me-2"><i class="bi bi-pencil-square"></i></a>
-                    <a href="delete.php?id=<?= $data['id_tatib'] ?>" class="text-danger"><i class="bi bi-trash"></i></a>
-                </td>
+                <th>No.</th>
+                <th>NIM</th>
+                <th>Nama Mahasiswa</th>
+                <th>Kelas</th>
+                <th>Pelanggaran</th>
+                <th>Tingkat </th>
+                <th>Aksi</th>
             </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <?php foreach ($mahasiswa as $index => $data): ?>
+                <tr>
+                    <td><?= $index + 1 ?></td>
+                    <td><?= htmlspecialchars($data['nim']) ?></td>
+                    <td><?= htmlspecialchars($data['nama_mahasiswa']) ?></td>
+                    <td><?= htmlspecialchars($data['kelas']) ?></td>
+                    <td><?= htmlspecialchars($data['pelanggaran']) ?></td>
+                    <td><?= htmlspecialchars($data['tingkat']) ?></td>
+                    <td>
+                        <a href="edit.php?id=<?= $data['id_tatib'] ?>" class="text-primary me-2"><i class="bi bi-pencil-square"></i></a>
+                        <a href="delete.php?id=<?= $data['id_tatib'] ?>" class="text-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i class="bi bi-trash"></i></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
 
-                </div>
             </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+function toggleDropdown() {
+    const dropdown = document.getElementById("dropdownMenu");
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+}
+
+window.onclick = function(event) {
+    if (!event.target.matches('.nav-link')) {
+        const dropdown = document.getElementById("dropdownMenu");
+        if (dropdown.style.display === "block") {
+            dropdown.style.display = "none";
+        }
+    }
+};
+</script>
 </body>
 
 </html>

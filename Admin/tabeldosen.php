@@ -3,11 +3,11 @@ session_start();
 
 // Mengecek apakah pengguna sudah login
 if (!isset($_SESSION['username'])) {
-    header("Location: ../index.php");
+    header("Location: ../index2.php");
     exit();
 }
 
-$serverName = "BEBI\DBMS22"; // Ganti dengan nama server Anda
+$serverName = "BEBI\\DBMS22"; // Ganti dengan nama server Anda
 $database = "PBL"; // Ganti dengan nama database Anda
 $username = ""; // Kosongkan karena menggunakan Windows Authentication
 $password = ""; // Kosongkan karena menggunakan Windows Authentication
@@ -18,10 +18,21 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Query untuk mengambil data biodata mahasiswa
+    $sql_dosen = "SELECT COUNT(*) FROM tb_dosen"; // Menghitung jumlah dosen
+    $stmt_dosen = $conn->prepare($sql_dosen);
+    $stmt_dosen->execute();
+    $jumlah_dosen = $stmt_dosen->fetchColumn(); // Mengambil jumlah dosen
+
+    $sql_mahasiswa = "SELECT COUNT(*) FROM tb_mahasiswa"; // Menghitung jumlah mahasiswa
+    $stmt_mahasiswa = $conn->prepare($sql_mahasiswa);
+    $stmt_mahasiswa->execute();
+    $jumlah_mahasiswa = $stmt_mahasiswa->fetchColumn(); // Mengambil jumlah mahasiswa
+
+    // Query untuk mengambil data biodata dosen
     $sql = "SELECT * FROM tb_dosen"; // Ganti dengan nama tabel yang sesuai
     $stmt = $conn->prepare($sql);
     $stmt->execute();
-    $mahasiswa = $stmt->fetchAll(); // Mengambil semua data mahasiswa
+    $mahasiswa = $stmt->fetchAll(PDO::FETCH_ASSOC); // Mengambil semua data mahasiswa
 } catch (PDOException $e) {
     die("Koneksi gagal: " . $e->getMessage());
 }
@@ -64,13 +75,19 @@ try {
                             <i class="bi bi-gear me-2"></i>Kelola Tata Tertib
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="bi bi-bell me-2"></i>Notifikasi Mahasiswa
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link" onclick="toggleDropdown()">
+                            <i class="bi bi-bell me-2"></i>Notifikasi
                         </a>
+                        <div class="dropdown-container" id="dropdownMenu">
+                            <ul class="notification-list">
+                                <li><a href="notifikasidosen.php">Notifikasi dari Dosen</a></li>
+                                <li><a href="notifikasimahasiswa.php">Notifikasi Mahasiswa</a></li>
+                            </ul>
+                        </div>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="logout.php" class="nav-link">
                             <i class="bi bi-box-arrow-right me-2"></i>Logout
                         </a>
                     </li>
@@ -82,33 +99,40 @@ try {
                 <h2>Selamat Datang</h2>
                 <p>di sistem Anukrama. Pilih menu di sidebar untuk mulai mengelola tata tertib, pelanggaran, dan notifikasi</p>
 
-                <div class="row mb-4">
+                <div class="row">
                     <div class="col-md-6">
                         <a href="tabeldosen.php" class="text-decoration-none">
                             <div class="card text-center">
                                 <div class="card-body">
                                     <h4>Dosen</h4>
-                                    <p>18</p>
+                                    <p><?php echo $jumlah_dosen; ?></p> <!-- Menampilkan jumlah dosen -->
                                 </div>
                             </div>
                         </a>
                     </div>
-
                     <div class="col-md-6">
                         <a href="tabelmahasiswa.php" class="text-decoration-none">
                             <div class="card text-center">
                                 <div class="card-body">
                                     <h4>Mahasiswa</h4>
-                                    <p>18</p>
+                                    <p><?php echo $jumlah_mahasiswa; ?></p> <!-- Menampilkan jumlah mahasiswa -->
                                 </div>
                             </div>
                         </a>
                     </div>
+                </div>
 
-                    <!-- Tabel Dosen -->
-                    <h4>Dosen</h4>
+                <!-- Tabel Dosen -->
+                <div class="table-container">
                     <table class="table table-bordered">
                         <thead>
+                            <tr>
+                                <th colspan="7" style="text-align: left; padding-left: 20px;">
+                                    <a href="tambah_dosen.php" class="text-white" title="Tambah Dosen" style="font-size: 20px; text-decoration: none;">
+                                        <i class="bi bi-person-plus" style="color: white; margin-right: 8px;"></i> Tambah Dosen
+                                    </a>
+                                </th>
+                            </tr>
                             <tr>
                                 <th>No.</th>
                                 <th>NIP</th>
@@ -119,11 +143,46 @@ try {
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Tabel kosong -->
+                            <?php
+                            // Looping untuk menampilkan data dosen
+                            $no = 1;
+                            foreach ($mahasiswa as $data) {
+                                echo "<tr>
+                                        <td>{$no}</td>
+                                        <td>{$data['nip']}</td>
+                                        <td>{$data['nama_dosen']}</td>
+                                        <td>{$data['jabatan_fungsional']}</td>
+                                        <td>{$data['status']}</td>
+                                        <td>
+                                          <a href='edit_dosen.php?id_dosen={$data['id_dosen']}' class='text-primary me-2' title='Edit'><i class='bi bi-pencil-square'></i></a>
+                                         <a href='hapus_dosen.php?id_dosen={$data['id_dosen']}' class='text-danger' title='Hapus'><i class='bi bi-trash'></i></a>
+
+                                        </td>
+                                    </tr>";
+                                $no++;
+                            }
+                            ?>
                         </tbody>
                     </table>
+                </div>
+            </div>
 
-                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+            <script>
+                function toggleDropdown() {
+                    const dropdown = document.getElementById("dropdownMenu");
+                    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+                }
 
-</html>
+                window.onclick = function(event) {
+                    if (!event.target.matches('.nav-link')) {
+                        const dropdown = document.getElementById("dropdownMenu");
+                        if (dropdown.style.display === "block") {
+                            dropdown.style.display = "none";
+                        }
+                    }
+                };
+            </script>
+        </body>
+
+    </html>

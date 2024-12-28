@@ -88,3 +88,45 @@ th {
         text-align: center; /* Menyesuaikan tampilan link */
     }
 }
+
+
+.row{
+    display: flex;
+}
+
+/* Styling untuk Dropdown Menu */
+.dropdown-container {
+    display: none; /* Menyembunyikan dropdown menu secara default */
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    width: 200px; /* Lebar dropdown */
+    border-radius: 5px;
+    top: 40px;
+    z-index: 10;
+}
+
+.notification-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notification-list li {
+    margin: 10px 0;
+}
+
+.notification-list a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.notification-list a:hover {
+    background-color: #cfe8ff;
+    color: #007bff;
+}

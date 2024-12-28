@@ -1,3 +1,10 @@
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+    /* Mencegah halaman untuk discroll */
+}
+
 body {
     margin: 0;
     font-family: 'Arial', sans-serif;
@@ -6,12 +13,25 @@ body {
     height: 100vh;
 }
 
+/* Tulisan ANUKRAMA */
+.anukrama-label {
+    font-size: 1.8em;
+    /* Ukuran font lebih besar */
+    font-weight: bold;
+    /* Membuat teks menjadi tebal */
+    text-transform: uppercase;
+    /* (Opsional) Mengubah teks menjadi huruf kapital semua */
+    color: #333;
+    /* (Opsional) Warna teks */
+    margin-bottom: 10px;
+    /* Memberikan jarak dengan elemen di bawahnya */
+}
+
 
 /* Sidebar */
-
 .sidebar {
     width: 20%;
-    background-color: #DEE5D4;
+    background-color: #EEF7FF;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
@@ -43,333 +63,421 @@ body {
     padding: 0;
 }
 
+/* Warna ikon dan tulisan menu sidebar */
+/* Menambahkan margin kiri untuk menu */
+.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    /* Menjaga elemen tetap rata kiri */
+    height: 100%;
+    /* Memastikan menu menempati seluruh tinggi sidebar */
+    padding-left: 15px;
+    /* Memberikan sedikit jarak dari kiri */
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    /* Memastikan menu memiliki lebar penuh */
+}
+
 .menu li {
     display: flex;
     align-items: center;
     padding: 10px 0;
     cursor: pointer;
-    color: #000;
+    color: black;
+    text-align: left;
+    /* Teks rata kiri */
 }
 
-.menu li.active {
-    font-weight: bold;
-    color: #007bff;
+.menu li a {
+    text-decoration: none;
+    color: black;
+    /* Warna teks */
+    font-weight: normal;
+    /* Teks tidak tebal */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    /* Agar teks dan ikon memanfaatkan lebar penuh */
 }
 
+.menu li.active a {
+    color: black;
+}
+
+/* Menambah jarak antar ikon dan teks */
 .menu i {
+    font-size: 1.2em;
+    color: black;
+    /* Warna ikon menjadi hitam */
     margin-right: 10px;
 }
 
 
-/* Main content */
 
+
+
+/* Main content */
 .main-content {
     width: 80%;
     padding: 20px;
     background: linear-gradient(to bottom, #DFF2EB, #4A628A);
-    overflow-y: auto;
+    overflow: hidden;
+    /* Menonaktifkan scroll pada konten utama */
     position: relative;
     color: black;
+    height: 100vh;
+    /* Membatasi tinggi konten utama agar tidak bisa digulir */
 }
 
-
 /* Info Cards */
-
+/* Info Cards */
 .info-container {
     display: flex;
     justify-content: space-around;
-    margin-top: 20px;
+    margin-top: 40px;
+    /* Menambahkan jarak lebih besar di atas info cards */
+    margin-bottom: 30px;
+    /* Menambahkan margin bawah untuk memberi jarak dengan tabel */
 }
 
+/* Menyesuaikan ukuran kotak info-card */
 .info-card {
-    width: 30%;
+    width: 20%;
+    /* Mengurangi lebar card */
     padding: 8px;
-    border-radius: 10px;
+    /* Menambahkan padding lebih kecil */
+    border-radius: 5px;
     color: white;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease; /* Menambahkan transisi halus */
+    /* Menempatkan teks di tengah secara vertikal dan horizontal */
+}
+.info-card:hover {
+    transform: translateY(-5px); /* Menggeser kotak sedikit ke atas */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Memberikan bayangan */
+    cursor: pointer; /* Menambahkan kursor pointer untuk interaksi */
 }
 
+.info-card h5,
+.info-card p {
+    font-weight: normal;
+    font-size: 20px;
+    margin-bottom: 5px;
+    
+    /* Menghilangkan bold pada teks */
+}
+
+/* Warna latar belakang untuk masing-masing info-card */
 .info-red {
-    background-color: #FF6B6B;
+    background-color: #d00f0f;
 }
 
 .info-orange {
-    background-color: #FFA500;
+    background-color: #e59500;
 }
 
 .info-green {
-    background-color: #4CAF50;
+    background-color: #0ba510;
 }
 
-
-/* Button */
-
-.btn-main {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    background-color: #374F6B;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
+.info-card.info-red:hover {
+    background-color: #f44336; /* Warna merah yang lebih gelap saat hover */
 }
 
-.btn-main:hover {
-    background-color: #ffffff;
-    color: #374F6B;
+.info-card.info-orange:hover {
+    background-color: #ff9800; /* Warna oranye yang lebih gelap saat hover */
+}
+
+.info-card.info-green:hover {
+    background-color: #4caf50; /* Warna hijau yang lebih gelap saat hover */
 }
 
 
 /* Table */
-
 table {
+    margin-top: 40px;
+    /* Menambahkan jarak lebih besar di atas tabel */
     border-collapse: collapse;
+    /* Menggabungkan border antar kolom dan baris */
     width: 100%;
     margin-bottom: 20px;
+    border: 1px solid #ccc;
+    /* Menambahkan border di sekitar tabel */
+    
 }
 
-th,
-td {
-    text-align: left;
-    padding: 8px;
-    border: 1px solid #ddd;
+/* CSS untuk header tabel */
+table th {
+    background-color: #4A628A !important;
+    /* Warna latar belakang biru tua */
+    color: white !important;
+    /* Warna teks putih */
+    text-align: center;
+    padding: 10px;
 }
 
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
+/* Menambahkan latar belakang dan gaya pada tombol aksi */
+.btn-three-dots {
 
-th {
-    background-color: #4A628A;
-    color: white;
-}
-
-
-/* Popup styles */
-
-.popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    /* Membuat tombol menjadi bulat */
+    padding: 1px 1px;
+    /* Menyesuaikan ukuran tombol */
+    display: inline-flex;
     justify-content: center;
     align-items: center;
 }
 
-.popup-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 300px;
+.btn-three-dots i {
+    color: #575555;
+    /* Warna ikon */
+    font-size: 16px;
+    /* Ukuran ikon */
+}
+
+/* Mengatur lebar kolom status */
+.table .col-status {
+    width: 150px;
+    /* Menentukan lebar kolom status */
+    text-align: center;
+    /* Mengatur agar teks status tetap di tengah */
+}
+
+
+
+
+
+/* Sel tabel */
+td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    /* Border untuk th dan td */
+    text-align: left;
+    background-color: #fff;
+    /* Latar belakang default untuk sel */
+}
+
+/* Warna untuk baris genap */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+    /* Warna latar belakang untuk baris genap */
+}
+
+/* Warna untuk baris ganjil */
+tr:nth-child(odd) {
+    background-color: #ffffff;
+    /* Warna latar belakang untuk baris ganjil */
+}
+
+/* Kolom No. dan Status tetap di tengah */
+th:nth-child(1),
+td:nth-child(1),
+th:nth-child(3),
+td:nth-child(3) {
     text-align: center;
 }
 
-.popup h2 {
-    margin: 0;
-    font-size: 1.5em;
-}
 
-.popup p {
-    margin: 10px 0;
-}
-
-.popup .close {
-    margin-top: 15px;
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.popup .close:hover {
-    background-color: #0056b3;
-}
-
-.message-icon {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-}
-
-
-/* Popup styles untuk Identitas Mahasiswa */
-
-.popup-content p {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    /* Ukuran font identitas mahasiswa */
-    margin: 5px 0;
-}
-
-.popup-content p .label {
-    font-weight: normal;
-    width: 130px;
-    color: #333;
-}
-
-.popup-content p .value {
-    font-weight: normal;
-    color: #666;
-    flex-grow: 1;
-}
-
-.popup-content p:last-child {
-    margin-bottom: 30px;
-    /* Memberi jarak di bawah identitas mahasiswa */
-}
-
-
-/* Chat List Container */
-
-.chat-list-container {
-    max-width: 400px;
-    margin: 20px auto;
-    border-radius: 10px;
+/*tabel detail*/
+/* Styling untuk tabel detail */
+table.table {
+    margin-top: 60px !important;
+    /* Memberikan jarak antara elemen lain dan tabel */
+    border-collapse: collapse;
+    /* Menggabungkan border antar kolom dan baris */
+    width: 100%;
+    /* Agar tabel memenuhi lebar kontainer */
+    background-color: #fff;
+    /* Latar belakang tabel putih */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    /* Memberikan efek bayangan untuk tabel */
+
+    margin: 0 auto;
+    /* Tetap di tengah */
+
+
+}
+table.detail-table {
+    width: 80%; /* Menggunakan lebar otomatis */
+    margin-top: 60px !important;
+    
+    
 }
 
-.chat-list-header {
+
+table.table th,
+table.table td {
+    padding: 12px;
+    /* Memberikan jarak pada teks agar tidak terlalu rapat dengan border */
+    text-align: left;
+    /* Mengatur teks agar rata kiri */
+    border: 1px solid #ddd;
+    /* Memberikan border halus pada sel */
+}
+
+table.table th {
     background-color: #4A628A;
-    color: #ffffff;
-    text-align: center;
-    padding: 10px 15px;
-    font-size: 18px;
+    /* Warna latar belakang header tabel */
+    color: white;
+    /* Warna teks header putih */
     font-weight: bold;
+    /* Membuat teks di header lebih tebal */
 }
 
-.chat-list-body {
-    padding: 10px 15px;
-    max-height: 400px;
-    overflow-y: auto;
+table.table td {
+    background-color: #fafafa;
+    /* Latar belakang sel tabel */
 }
 
-.chat-list-item {
+table.table tr:nth-child(even) {
+    background-color: #f9f9f9;
+    /* Memberikan warna latar belakang berbeda untuk baris genap */
+}
+
+table.table tr:nth-child(odd) {
+    background-color: #fff;
+    /* Warna latar belakang untuk baris ganjil */
+}
+
+table.table td strong {
+    color: #333;
+    /* Memberikan warna untuk teks yang ditebalkan */
+    font-size: 1.1em;
+    /* Membuat teks yang ditebalkan sedikit lebih besar */
+}
+
+table.table td {
+    font-size: 1em;
+    /* Ukuran font normal untuk konten tabel */
+}
+
+
+
+
+
+/* Menambah padding kiri-kanan untuk kolom tabel yang lebih panjang */
+table.table td:first-child {
+    padding-left: 20px;
+    /* Memberikan jarak kiri pada kolom pertama */
+}
+
+table.table td:last-child {
+    padding-right: 20px;
+    /* Memberikan jarak kanan pada kolom terakhir */
+}
+
+.back-to-dashboard {
+    margin-left: 20px;
+    /* Sesuaikan dengan lebar label agar rata kiri */
+    margin-top: 10px;
+    /* Jarak dari elemen di atasnya */
+    text-align: left;
+    /* Rata kiri */
+    font-size: 14px !important;
+    padding: 5px 10px !important;
+    border-radius: 3px !important;
+}
+thead th.center {
+    text-align: center;
+}
+
+
+
+
+/* Kontainer utama */
+.detail-container {
+    width: 100%;
+    margin: 20px 0;
     display: flex;
     flex-direction: column;
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
-    cursor: pointer;
+    /* Menyusun item dalam kolom */
+
 }
 
-.chat-item-info {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14px;
-    font-weight: bold;
-    color: #333;
-}
-
-.chat-item-time {
-    font-size: 12px;
-    color: #3D413B;
-}
-
-.chat-item-message {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    color: #666;
-    margin-top: 5px;
-}
-
-.chat-item-status.sent {
-    color: green;
-}
-
-.chat-item-status.failed {
-    color: red;
-}
-
-
-/* Modal Styles */
-
-.notification {
-    display: none;
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    padding: 20px 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 0 auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.header {
-    font-size: 18px;
+/* Styling untuk setiap item detail */
+.detail-item {
+    display: flex; /* Menjaga elemen dalam satu baris */
+    align-items: center; /* Menyelaraskan elemen vertikal di tengah */
     margin-bottom: 10px;
-    text-align: left;
-    color: #333;
+    margin-left: 20px;
 }
 
-.header.date {
-    font-size: 16px;
-    margin-bottom: 50px;
+/* Styling untuk label */
+.detail-item .label {
+    min-width: 180px;
+    font-weight: bold;
+    margin-right: 5px;
     text-align: left;
-    color: #999999;
 }
 
-.notification-details .row {
+/* Styling untuk titik dua */
+.detail-item .colon {
+    margin-right: 5px;
+}
+
+/* Styling untuk nilai */
+.detail-item span {
+    text-align: left;
+    word-wrap: break-word;
+}
+
+
+
+.table-container {
     display: flex;
-    gap: 12px;
-    margin-bottom: 12px;
-}
-
-.label {
-    width: 180px;
-    color: #999999;
-    text-align: left;
-    font-size: 14px;
-}
-
-.value {
-    flex: 1;
-    color: #666;
-    font-size: 14px;
-    display: flex;
+    justify-content: center;
     align-items: center;
+    margin-top: 20px;
 }
 
-.file-input {
-    padding: 0;
-    font-size: 14px;
-    border: none;
-    background: none;
+.table {
+    width: 8 0% !important;
+    margin: 0 auto;
+    /* Tetap di tengah */
+    background-color: #f9f9f9;
+    /* Opsional: Tambahkan latar belakang */
 }
 
-#fileName {
-    font-size: 14px;
-    color: #666;
-    margin-top: 10px;
-    font-style: italic;
+.table th,
+.table td {
+    text-align: left;
+    /* Atur teks rata kiri */
+    padding: 10px;
+    /* Beri padding */
 }
 
-.back-button {
-    background-color: #4A628A;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    margin-bottom: 20px;
+.table th {
+    background-color: #e9ecef;
+    /* Opsional: Warna header */
 }
 
-.back-button:hover {
-    background-color: #3b4c70;
+table.table td:hover, table.table tr:hover {
+    background-color: transparent !important;
+    box-shadow: none !important;
 }
+.table-container {
+    max-height: 500px; /* Atur tinggi maksimal untuk kontainer tabel */
+    overflow-y: auto; /* Aktifkan scroll vertikal */
+}
+
+.table {
+    margin-bottom: 20; /* Hilangkan margin bawah tabel */
+}
+
+
+
+
+
+

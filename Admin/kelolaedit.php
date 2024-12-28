@@ -1,66 +1,65 @@
 <?php
 session_start();
-
 require '../koneksi/kon.php';
 
-// Mengecek apakah pengguna sudah login
 if (!isset($_SESSION['username'])) {
-    header("Location: ../index.php");
+    header("Location: ../index2.php");
     exit();
 }
 
-$serverName = "BEBI\\DBMS22"; // Ganti dengan nama server Anda
-$database = "PBL"; // Ganti dengan nama database Anda
-$username = ""; // Kosongkan karena menggunakan Windows Authentication
-$password = ""; // Kosongkan karena menggunakan Windows Authentication
-
 try {
-    // Koneksi ke database
+    // Pastikan parameter koneksi sesuai
     $conn = new PDO("sqlsrv:Server=BEBI\\DBMS22;Database=PBL", "", "");
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Jika form disubmit
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Ambil data dari form
-        $nama_mahasiswa = $_POST['nama_mahasiswa'];
-        $nim = $_POST['nim'];
-        $kelas = $_POST['kelas'];
-        $pelanggaran = $_POST['pelanggaran'];
-        $tingkat = $_POST['tingkat'];
-        $bukti = null;
+    // Cek apakah form sudah disubmit
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Ambil data dari form dengan validasi tambahan
+        $nim = isset($_POST['nim']) ? trim($_POST['nim']) : null;
+        $nama_mahasiswa = isset($_POST['nama_mahasiswa']) ? trim($_POST['nama_mahasiswa']) : null;
+        $kelas = isset($_POST['kelas']) ? trim($_POST['kelas']) : null;
+        $pelanggaran = isset($_POST['pelanggaran']) ? trim($_POST['pelanggaran']) : null;
+        $tingkat = isset($_POST['tingkat']) ? trim($_POST['tingkat']) : null;
+        $kompensasi = isset($_POST['kompensasi']) ? trim($_POST['kompensasi']) : null;
+        $tenggat = isset($_POST['tenggat']) ? trim($_POST['tenggat']) : null;
 
-        // Proses upload file (jika ada)
-        if (!empty($_FILES['bukti']['name'])) {
-            $targetDir = "uploads/"; // Folder untuk menyimpan file
-            $bukti = $targetDir . basename($_FILES['bukti']['name']);
-            move_uploaded_file($_FILES['bukti']['tmp_name'], $bukti);
+
+        // Validasi data input
+        if (!empty($nim) && !empty($nama_mahasiswa) && !empty($kelas) && !empty($pelanggaran) && !empty($tingkat) && !empty($kompensasi) && !empty($tenggat)) {
+            // Insert data baru
+            $stmt = $conn->prepare("INSERT INTO tb_kelolatatib (nim, nama_mahasiswa, kelas, pelanggaran, tingkat,kompensasi,tenggat) VALUES (:nim, :nama_mahasiswa, :kelas, :pelanggaran, :tingkat, :kompensasi, :tenggat)");
+
+            // Bind parameter
+            $stmt->bindParam(':nim', $nim);
+            $stmt->bindParam(':nama_mahasiswa', $nama_mahasiswa);
+            $stmt->bindParam(':kelas', $kelas);
+            $stmt->bindParam(':pelanggaran', $pelanggaran);
+            $stmt->bindParam(':tingkat', $tingkat);
+            $stmt->bindParam(':kompensasi', $kompensasi);
+            $stmt->bindParam(':tenggat', $tenggat);
+
+            if ($stmt->execute()) {
+                // Setelah berhasil, arahkan ke kelola.php
+                header("Location: kelola.php");
+                exit();
+            } else {
+                echo "Gagal menyimpan pelanggaran.";
+            }
+        } else {
+            echo "Semua kolom harus diisi.";
         }
-
-  // Insert data ke database
-$sqlInsert = "INSERT INTO tb_kelolatatib (nim, tahun_ajaran, nama_mahasiswa, kelas, pelanggaran, tingkat, bukti) 
-VALUES (:nim, :tahun_ajaran, :nama_mahasiswa, :kelas, :pelanggaran, :tingkat, :bukti)";
-$stmt = $conn->prepare($sqlInsert);
-$stmt->bindParam(':nama_mahasiswa', $nama_mahasiswa);
-$stmt->bindParam(':nim', $nim);
-$stmt->bindParam(':kelas', $kelas);
-$stmt->bindParam(':pelanggaran', $pelanggaran);
-$stmt->bindParam(':tingkat', $tingkat);
-$stmt->bindParam(':bukti', $bukti);
-
-if ($stmt->execute()) {
-// Redirect ke halaman kelola.php setelah berhasil menyimpan
-echo "<script>alert('Data berhasil ditambahkan!');</script>";
-header("Location: kelola.php");
-exit();
-} else {
-echo "<script>alert('Gagal menambahkan data!');</script>";
-}
-
     }
 } catch (PDOException $e) {
     die("Koneksi gagal: " . $e->getMessage());
 }
 ?>
+
+
+
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="id">
@@ -77,25 +76,7 @@ echo "<script>alert('Gagal menambahkan data!');</script>";
         function addCard() {
             const cardContainer = document.getElementById("cardContainer");
 
-            // Create a new card element
-            const card = document.createElement("div");
-            card.className = "card mb-3";
-            card.innerHTML = `
-        <div class="card-body">
-          <p class="card-text">Nama Mahasiswa: New Name</p>
-          <p class="card-text">NIM: New NIM</p>
-          <p class="card-text">Kelas: New Class</p>
-          <p class="card-text">Pelanggaran: New Violation</p>
-          <p class="card-text">Tingkat Pelanggaran: New Level</p>
-          <p class="card-text">Tahun Ajaran: New Academic Year</p>
-          <div>
-            <label for="fileUpload" class="form-label">Upload Bukti Pelanggaran:</label>
-            <input type="file" class="form-control mb-3" id="fileUpload">
-            <a href="#" class="btn btn-primary btn-sm me-2" title="Edit"><i class="bi bi-pencil-square"></i> Edit</a>
-            <a href="#" class="btn btn-danger btn-sm" title="Hapus"><i class="bi bi-trash"></i> Hapus</a>
-          </div>
-        </div>
-      `;
+
 
             cardContainer.appendChild(card);
         }
@@ -128,13 +109,19 @@ echo "<script>alert('Gagal menambahkan data!');</script>";
                             <i class="bi bi-gear me-2"></i>Kelola Tata Tertib
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="bi bi-bell me-2"></i>Notifikasi Mahasiswa
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link" onclick="toggleDropdown()">
+                            <i class="bi bi-bell me-2"></i>Notifikasi
                         </a>
+                        <div class="dropdown-container" id="dropdownMenu">
+                            <ul class="notification-list">
+                                <li><a href="notifikasidosen.php">Notifikasi dari Dosen</a></li>
+                                <li><a href="notifikasimahasiswa.php">Notifikasi Mahasiswa</a></li>
+                            </ul>
+                        </div>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="logout.php" class="nav-link">
                             <i class="bi bi-box-arrow-right me-2"></i>Logout
                         </a>
                     </li>
@@ -146,66 +133,231 @@ echo "<script>alert('Gagal menambahkan data!');</script>";
                 <h2>Kelola Tata Tertib</h2>
                 <p>Tambahkan, edit, atau hapus aturan tata tertib di bawah ini:</p>
 
-                <!-- Button to Add Card -->
-                <a href="kelola.php" class="btn btn-success mb-3">
-                    Tambah Pelanggaran
-                </a>
-
-
-                <!-- Card Container -->
-                <div id="cardContainer">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <!-- Inputan untuk Nama Mahasiswa -->
-                            <div class="mb-3">
-                                <label for="namaMahasiswa" class="form-label">Nama Mahasiswa</label>
-                                <input type="text" class="form-control" id="namaMahasiswa"
-                                    placeholder="Masukkan Nama Mahasiswa">
-                            </div>
-
-                            <!-- Inputan untuk NIM -->
-                            <div class="mb-3">
+                <!-- Form untuk tambah pelanggaran -->
+                <form method="POST" action="" enctype="multipart/form-data">
+                    <button type="submit" class="btn btn-success mb-3">Tambah Pelanggaran</button>
+                    <!-- Card Container -->
+                    <div class="form-background">
+                        <!-- Input NIM -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
                                 <label for="nim" class="form-label">NIM</label>
-                                <input type="text" class="form-control" id="nim" placeholder="Masukkan NIM">
+                                <input type="text" class="form-control" id="nim" name="nim" placeholder="Masukkan NIM"
+                                    required>
                             </div>
+                            <!-- Input Nama Mahasiswa -->
+                            <div class="col-md-6">
+                                <label for="nama_mahasiswa" class="form-label">Nama Mahasiswa</label>
+                                <input type="text" class="form-control" id="nama_mahasiswa" name="nama_mahasiswa"
+                                    placeholder="Masukkan Nama Mahasiswa" required>
+                            </div>
+                        </div>
 
-                            <!-- Inputan untuk Kelas -->
-                            <div class="mb-3">
-                                <label for="kelas" class="form-label">Kelas</label>
-                                <input type="text" class="form-control" id="kelas" placeholder="Masukkan Kelas">
-                            </div>
 
-                            <!-- Inputan untuk Pelanggaran -->
-                            <div class="mb-3">
-                                <label for="pelanggaran" class="form-label">Pelanggaran</label>
-                                <input type="text" class="form-control" id="pelanggaran"
-                                    placeholder="Masukkan Pelanggaran">
-                            </div>
+                        <!-- Input Kelas -->
+                        <div class="mb-3">
+                            <label for="kelas" class="form-label">Kelas</label>
+                            <select class="form-select" id="kelas" name="kelas" required>
+                                <option selected disabled value="">Pilih kelas</option>
+                                <option value="SIB 1A">SIB 1A</option>
+                                <option value="SIB 1B">SIB 1B</option>
+                                <option value="SIB 1C">SIB 1C</option>
+                                <option value="SIB 1D">SIB 1D</option>
+                                <option value="SIB 1E">SIB 1E</option>
+                                <option value="SIB 1F">SIB 1F</option>
+                                <option value="SIB 1G">SIB 1G</option>
+                                <option value="SIB 2A">SIB 2A</option>
+                                <option value="SIB 2B">SIB 2B</option>
+                                <option value="SIB 2C">SIB 2C</option>
+                                <option value="SIB 2D">SIB 2D</option>
+                                <option value="SIB 2E">SIB 2E</option>
+                                <option value="SIB 2F">SIB 2F</option>
+                                <option value="SIB 2G">SIB 2G</option>
+                                <option value="SIB 3A">SIB 3A</option>
+                                <option value="SIB 3B">SIB 3B</option>
+                                <option value="SIB 3C">SIB 3C</option>
+                                <option value="SIB 3D">SIB 3D</option>
+                                <option value="SIB 3E">SIB 3E</option>
+                                <option value="SIB 3F">SIB 3F</option>
+                                <option value="SIB 3G">SIB 3G</option>
+                                <option value="SIB 4A">SIB 4A</option>
+                                <option value="SIB 4B">SIB 4B</option>
+                                <option value="SIB 4C">SIB 4C</option>
+                                <option value="SIB 4D">SIB 4D</option>
+                                <option value="SIB 4E">SIB 4E</option>
+                                <option value="SIB 4F">SIB 4F</option>
+                                <option value="SIB 4G">SIB 4G</option>
+                            </select>
+                        </div>
 
-                            <!-- Inputan untuk Tingkat Pelanggaran -->
-                            <div class="mb-3">
-                                <label for="tingkatPelanggaran" class="form-label">Tingkat Pelanggaran</label>
-                                <input type="text" class="form-control" id="tingkatPelanggaran"
-                                    placeholder="Masukkan Tingkat Pelanggaran">
-                            </div>
-                            <!-- Upload Bukti Pelanggaran -->
-                            <div class="mb-3">
-                                <label for="fileUpload" class="form-label">Upload Bukti Pelanggaran</label>
-                                <input type="file" class="form-control" id="fileUpload">
-                            </div>
+                        <!-- Input Pelanggaran -->
+                        <div class="mb-3">
+                            <label for="pelanggaran" class="form-label">Pelanggaran</label>
+                            <select class="form-select" id="pelanggaran" name="pelanggaran" required>
+                                <option value="" selected disabled>Pilih Pelanggaran</option>
+                                <option
+                                    value="Berkomunikasi dengan tidak sopan, baik tertulis atau tidak tertulis kepada mahasiswa, dosen, karyawan, atau orang lain">
+                                    Berkomunikasi dengan tidak sopan, baik tertulis atau tidak tertulis kepada
+                                    mahasiswa, dosen, karyawan, atau orang lain</option>
+                                <option
+                                    value="Berbusana tidak sopan dan tidak rapi, seperti berpakaian ketat, transparan, memakai t-shirt (baju kaos tidak berkerah), tank top, hipster, you can see, rok mini, backless, celana pendek, celana tiga per empat, legging, model celana tertentu">
+                                    Berbusana tidak sopan dan tidak rapi, seperti berpakaian ketat, transparan, memakai
+                                    t-shirt (baju kaos tidak berkerah), tank top, hipster, you can see, rok mini,
+                                    backless, celana pendek, celana tiga per empat, legging, model celana tertentu
+                                </option>
+                                <option
+                                    value="Mahasiswa laki-laki berambut tidak rapi, gondrong, yaitu panjang rambutnya melewati batas alis mata di bagian depan, telinga di bagian samping, atau menyentuh kerah baju di bagian leher">
+                                    Mahasiswa laki-laki berambut tidak rapi, gondrong, yaitu panjang rambutnya melewati
+                                    batas alis mata di bagian depan, telinga di bagian samping, atau menyentuh kerah
+                                    baju di bagian leher</option>
+                                <option
+                                    value="Mahasiswa berambut dengan model punk, dicat selain hitam, dan/atau skinned">
+                                    Mahasiswa berambut dengan model punk, dicat selain hitam, dan/atau skinned</option>
+                                <option value="Makan, atau minum di dalam ruang kuliah/laboratorium/bengkel">Makan, atau
+                                    minum di dalam ruang kuliah/laboratorium/bengkel</option>
+                                <option
+                                    value="Melanggar peraturan/ketentuan yang berlaku di Polinema baik di Jurusan/Program Studi">
+                                    Melanggar peraturan/ketentuan yang berlaku di Polinema baik di Jurusan/Program Studi
+                                </option>
+                                <option value="Tidak menjaga kebersihan di seluruh area Polinema">Tidak menjaga
+                                    kebersihan di seluruh area Polinema</option>
+                                <option
+                                    value="Membuat kegaduhan yang mengganggu pelaksanaan perkuliahan atau praktikum yang sedang berlangsung">
+                                    Membuat kegaduhan yang mengganggu pelaksanaan perkuliahan atau praktikum yang sedang
+                                    berlangsung</option>
+                                <option value="Merokok di luar area kawasan merokok">Merokok di luar area kawasan
+                                    merokok</option>
+                                <option value="Bermain kartu, game online di area kampus">Bermain kartu, game online di
+                                    area kampus</option>
+                                <option
+                                    value="Mengotori atau mencoret-coret meja, kursi, tembok, dan lain-lain di lingkungan Polinema">
+                                    Mengotori atau mencoret-coret meja, kursi, tembok, dan lain-lain di lingkungan
+                                    Polinema</option>
+                                <option
+                                    value="Bertingkah laku kasar atau tidak sopan kepada mahasiswa, dosen, dan/atau karyawan">
+                                    Bertingkah laku kasar atau tidak sopan kepada mahasiswa, dosen, dan/atau karyawan
+                                </option>
+                                <option value="Merusak sarana dan prasarana yang ada di area Polinema">Merusak sarana
+                                    dan prasarana yang ada di area Polinema</option>
+                                <option
+                                    value="Tidak menjaga ketertiban dan keamanan di seluruh area Polinema (misalnya: parkir tidak pada tempatnya, konvoi selebrasi wisuda, dll)">
+                                    Tidak menjaga ketertiban dan keamanan di seluruh area Polinema (misalnya: parkir
+                                    tidak pada tempatnya, konvoi selebrasi wisuda, dll)</option>
+                                <option
+                                    value="Melakukan pengotoran/pengrusakan barang milik orang lain termasuk milik Politeknik Negeri Malang">
+                                    Melakukan pengotoran/pengrusakan barang milik orang lain termasuk milik Politeknik
+                                    Negeri Malang</option>
+                                <option value="Mengakses materi pornografi di kelas atau area kampus">Mengakses materi
+                                    pornografi di kelas atau area kampus</option>
+                                <option
+                                    value="Membawa dan/atau menggunakan senjata tajam dan/atau senjata api untuk hal kriminal">
+                                    Membawa dan/atau menggunakan senjata tajam dan/atau senjata api untuk hal kriminal
+                                </option>
+                                <option
+                                    value="Melakukan perkelahian, serta membentuk geng/kelompok yang bertujuan negatif">
+                                    Melakukan perkelahian, serta membentuk geng/kelompok yang bertujuan negatif</option>
+                                <option value="Melakukan kegiatan politik praktis di dalam kampus">Melakukan kegiatan
+                                    politik praktis di dalam kampus</option>
+                                <option value="Melakukan tindakan kekerasan atau perkelahian di dalam kampus">Melakukan
+                                    tindakan kekerasan atau perkelahian di dalam kampus</option>
+                                <option value="Melakukan penyalahgunaan identitas untuk perbuatan negatif">Melakukan
+                                    penyalahgunaan identitas untuk perbuatan negatif</option>
+                                <option
+                                    value="Mengancam, baik tertulis atau tidak tertulis kepada mahasiswa, dosen, dan/atau karyawan">
+                                    Mengancam, baik tertulis atau tidak tertulis kepada mahasiswa, dosen, dan/atau
+                                    karyawan</option>
+                                <option value="Mencuri dalam bentuk apapun">Mencuri dalam bentuk apapun</option>
+                                <option value="Melakukan kecurangan dalam bidang akademik, administratif, dan keuangan">
+                                    Melakukan kecurangan dalam bidang akademik, administratif, dan keuangan</option>
+                                <option value="Melakukan pemerasan dan/atau penipuan">Melakukan pemerasan dan/atau
+                                    penipuan</option>
+                                <option
+                                    value="Melakukan pelecehan dan/atau tindakan asusila dalam segala bentuk di dalam dan di luar kampus">
+                                    Melakukan pelecehan dan/atau tindakan asusila dalam segala bentuk di dalam dan di
+                                    luar kampus</option>
+                                <option
+                                    value="Berjudi, mengkonsumsi minum-minuman keras, dan/atau bermabuk-mabukan di lingkungan dan di luar lingkungan Kampus Polinema">
+                                    Berjudi, mengkonsumsi minum-minuman keras, dan/atau bermabuk-mabukan di lingkungan
+                                    dan di luar lingkungan Kampus Polinema</option>
+                                <option
+                                    value="Mengikuti organisasi dan/atau menyebarkan faham-faham yang dilarang oleh Pemerintah">
+                                    Mengikuti organisasi dan/atau menyebarkan faham-faham yang dilarang oleh Pemerintah
+                                </option>
+                                <option value="Melakukan pemalsuan data/dokumen/tanda tangan">Melakukan pemalsuan
+                                    data/dokumen/tanda tangan</option>
+                                <option value="Melakukan plagiasi (copy paste) dalam tugas-tugas atau karya ilmiah">
+                                    Melakukan plagiasi (copy paste) dalam tugas-tugas atau karya ilmiah</option>
+                                <option
+                                    value="Tidak menjaga nama baik Polinema di masyarakat dan/atau mencemarkan nama baik Polinema melalui media apapun">
+                                    Tidak menjaga nama baik Polinema di masyarakat dan/atau mencemarkan nama baik
+                                    Polinema melalui media apapun</option>
+                                <option
+                                    value="Melakukan kegiatan atau sejenisnya yang dapat menurunkan kehormatan atau martabat Negara, Bangsa, dan Polinema">
+                                    Melakukan kegiatan atau sejenisnya yang dapat menurunkan kehormatan atau martabat
+                                    Negara, Bangsa, dan Polinema</option>
+                                <option value="Menggunakan barang-barang psikotropika dan/atau zat-zat adiktif lainnya">
+                                    Menggunakan barang-barang psikotropika dan/atau zat-zat adiktif lainnya</option>
+                                <option
+                                    value="Mengedarkan serta menjual barang-barang psikotropika dan/atau zat-zat adiktif lainnya">
+                                    Mengedarkan serta menjual barang-barang psikotropika dan/atau zat-zat adiktif
+                                    lainnya</option>
+                                <option
+                                    value="Terlibat dalam tindakan kriminal dan dinyatakan bersalah oleh Pengadilan">
+                                    Terlibat dalam tindakan kriminal dan dinyatakan bersalah oleh Pengadilan</option>
+                            </select>
+                        </div>
 
-                            <!-- Button Edit dan Hapus -->
-                            <div>
-                                <a href="#" class="btn btn-primary btn-sm me-2" title="Edit"><i
-                                        class="bi bi-pencil-square"></i> Edit</a>
-                                <a href="#" class="btn btn-danger btn-sm" title="Hapus"><i class="bi bi-trash"></i>
-                                    Hapus</a>
+
+
+                        <!-- Input Tingkat Pelanggaran -->
+                        <div class="mb-3">
+                            <label for="tingkat" class="form-label">Tingkat Pelanggaran</label>
+                            <select class="form-select" id="tingkat" name="tingkat" required>
+                                <option value="" selected disabled>Pilih Tingkat Pelanggaran</option>
+                                <option value="I">I</option>
+                                <option value="II">II</option>
+                                <option value="III">III</option>
+                                <option value="IV">IV</option>
+                                <option value="V">V</option>
+                            </select>
+                        </div>
+                        <!-- Input Kompensasi -->
+                        <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="kompensasi" class="form-label">Kompensasi</label>
+                            <input type="text" class="form-control" id="kompensasi" name="kompensasi"
+                                placeholder="Masukkan Kompensasi" required>
+                        </div>
+                            <!-- Tenggat Waktu -->
+                            <div class="col-md-6">
+                                <label for="tenggat" class="form-label">Tenggat Waktu</label>
+                                <input type="date" class="form-control" id="tenggat" name="tenggat" required>
                             </div>
                         </div>
                     </div>
+            </div>
+            </form>
+        </div>
+    </div>
 
-                    <script
-                        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdownMenu");
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
+
+        window.onclick = function (event) {
+            if (!event.target.matches('.nav-link')) {
+                const dropdown = document.getElementById("dropdownMenu");
+                if (dropdown.style.display === "block") {
+                    dropdown.style.display = "none";
+                }
+            }
+        };
+    </script>
+    </div>
+    </div>
 </body>
 
 </html>
