@@ -1,0 +1,132 @@
+/* Sidebar */
+.sidebar {
+    width: 20%;
+    background-color: #DEE5D4;
+    padding: 20px;
+    height: 100vh; /* Pastikan sidebar memenuhi seluruh tinggi layar */
+    position: fixed; /* Sidebar tetap di tempat saat scrolling */
+}
+
+.nav-link {
+    color: #333;
+    margin: 10px 0;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    font-weight: bold;
+    color: #007bff;
+    background-color: #cfe8ff; /* Memberikan efek hover dengan latar belakang */
+
+}
+
+/* Card Styling */
+.card {
+    background-color: #e7f3ff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+
+/* Tabel Styling */
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px 8px; /* Menambah ruang padding */
+    border: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #e8f0f9; /* Memberikan efek hover pada baris tabel */
+    transition: 0.2s ease;
+}
+
+th {
+    background-color: #4A628A !important;
+    color: white;
+    font-weight: bold;
+}
+
+/* Konten Utama */
+#main-content {
+    width: 80%;
+    margin-left: 20%; /* Menyesuaikan dengan lebar sidebar */
+    padding: 20px;
+    background: linear-gradient(to bottom, #DFF2EB, #4A628A);
+    overflow-y: auto;
+    min-height: 100vh; /* Pastikan konten utama selalu memenuhi layar */
+    color: #333;
+}
+
+/* Responsif untuk layar kecil */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    #main-content {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .nav-link {
+        text-align: center; /* Menyesuaikan tampilan link */
+    }
+}
+
+
+.row{
+    display: flex;
+}
+
+/* Styling untuk Dropdown Menu */
+.dropdown-container {
+    display: none; /* Menyembunyikan dropdown menu secara default */
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    width: 200px; /* Lebar dropdown */
+    border-radius: 5px;
+    top: 40px;
+    z-index: 10;
+}
+
+.notification-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notification-list li {
+    margin: 10px 0;
+}
+
+.notification-list a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.notification-list a:hover {
+    background-color: #cfe8ff;
+    color: #007bff;
+}

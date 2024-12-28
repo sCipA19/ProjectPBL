@@ -1,0 +1,483 @@
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+    /* Mencegah halaman untuk discroll */
+}
+
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    height: 100vh;
+}
+
+/* Tulisan ANUKRAMA */
+.anukrama-label {
+    font-size: 1.8em;
+    /* Ukuran font lebih besar */
+    font-weight: bold;
+    /* Membuat teks menjadi tebal */
+    text-transform: uppercase;
+    /* (Opsional) Mengubah teks menjadi huruf kapital semua */
+    color: #333;
+    /* (Opsional) Warna teks */
+    margin-bottom: 10px;
+    /* Memberikan jarak dengan elemen di bawahnya */
+}
+
+
+/* Sidebar */
+.sidebar {
+    width: 20%;
+    background-color: #EEF7FF;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.profile-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.profile-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Warna ikon dan tulisan menu sidebar */
+/* Menambahkan margin kiri untuk menu */
+.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    /* Menjaga elemen tetap rata kiri */
+    height: 100%;
+    /* Memastikan menu menempati seluruh tinggi sidebar */
+    padding-left: 15px;
+    /* Memberikan sedikit jarak dari kiri */
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    /* Memastikan menu memiliki lebar penuh */
+}
+
+.menu li {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    cursor: pointer;
+    color: black;
+    text-align: left;
+    /* Teks rata kiri */
+}
+
+.menu li a {
+    text-decoration: none;
+    color: black;
+    /* Warna teks */
+    font-weight: normal;
+    /* Teks tidak tebal */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    /* Agar teks dan ikon memanfaatkan lebar penuh */
+}
+
+.menu li.active a {
+    color: black;
+}
+
+/* Menambah jarak antar ikon dan teks */
+.menu i {
+    font-size: 1.2em;
+    color: black;
+    /* Warna ikon menjadi hitam */
+    margin-right: 10px;
+}
+
+
+
+
+
+/* Main content */
+.main-content {
+    width: 80%;
+    padding: 20px;
+    background: linear-gradient(to bottom, #DFF2EB, #4A628A);
+    overflow: hidden;
+    /* Menonaktifkan scroll pada konten utama */
+    position: relative;
+    color: black;
+    height: 100vh;
+    /* Membatasi tinggi konten utama agar tidak bisa digulir */
+}
+
+/* Info Cards */
+/* Info Cards */
+.info-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 40px;
+    /* Menambahkan jarak lebih besar di atas info cards */
+    margin-bottom: 30px;
+    /* Menambahkan margin bawah untuk memberi jarak dengan tabel */
+}
+
+/* Menyesuaikan ukuran kotak info-card */
+.info-card {
+    width: 20%;
+    /* Mengurangi lebar card */
+    padding: 8px;
+    /* Menambahkan padding lebih kecil */
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease; /* Menambahkan transisi halus */
+    /* Menempatkan teks di tengah secara vertikal dan horizontal */
+}
+.info-card:hover {
+    transform: translateY(-5px); /* Menggeser kotak sedikit ke atas */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Memberikan bayangan */
+    cursor: pointer; /* Menambahkan kursor pointer untuk interaksi */
+}
+
+.info-card h5,
+.info-card p {
+    font-weight: normal;
+    font-size: 20px;
+    margin-bottom: 5px;
+    
+    /* Menghilangkan bold pada teks */
+}
+
+/* Warna latar belakang untuk masing-masing info-card */
+.info-red {
+    background-color: #d00f0f;
+}
+
+.info-orange {
+    background-color: #e59500;
+}
+
+.info-green {
+    background-color: #0ba510;
+}
+
+.info-card.info-red:hover {
+    background-color: #f44336; /* Warna merah yang lebih gelap saat hover */
+}
+
+.info-card.info-orange:hover {
+    background-color: #ff9800; /* Warna oranye yang lebih gelap saat hover */
+}
+
+.info-card.info-green:hover {
+    background-color: #4caf50; /* Warna hijau yang lebih gelap saat hover */
+}
+
+
+/* Table */
+table {
+    margin-top: 40px;
+    /* Menambahkan jarak lebih besar di atas tabel */
+    border-collapse: collapse;
+    /* Menggabungkan border antar kolom dan baris */
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    /* Menambahkan border di sekitar tabel */
+    
+}
+
+/* CSS untuk header tabel */
+table th {
+    background-color: #4A628A !important;
+    /* Warna latar belakang biru tua */
+    color: white !important;
+    /* Warna teks putih */
+    text-align: center;
+    padding: 10px;
+}
+
+/* Menambahkan latar belakang dan gaya pada tombol aksi */
+.btn-three-dots {
+
+    border-radius: 50%;
+    /* Membuat tombol menjadi bulat */
+    padding: 1px 1px;
+    /* Menyesuaikan ukuran tombol */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-three-dots i {
+    color: #575555;
+    /* Warna ikon */
+    font-size: 16px;
+    /* Ukuran ikon */
+}
+
+/* Mengatur lebar kolom status */
+.table .col-status {
+    width: 150px;
+    /* Menentukan lebar kolom status */
+    text-align: center;
+    /* Mengatur agar teks status tetap di tengah */
+}
+
+
+
+
+
+/* Sel tabel */
+td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    /* Border untuk th dan td */
+    text-align: left;
+    background-color: #fff;
+    /* Latar belakang default untuk sel */
+}
+
+/* Warna untuk baris genap */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+    /* Warna latar belakang untuk baris genap */
+}
+
+/* Warna untuk baris ganjil */
+tr:nth-child(odd) {
+    background-color: #ffffff;
+    /* Warna latar belakang untuk baris ganjil */
+}
+
+/* Kolom No. dan Status tetap di tengah */
+th:nth-child(1),
+td:nth-child(1),
+th:nth-child(3),
+td:nth-child(3) {
+    text-align: center;
+}
+
+
+/*tabel detail*/
+/* Styling untuk tabel detail */
+table.table {
+    margin-top: 60px !important;
+    /* Memberikan jarak antara elemen lain dan tabel */
+    border-collapse: collapse;
+    /* Menggabungkan border antar kolom dan baris */
+    width: 100%;
+    /* Agar tabel memenuhi lebar kontainer */
+    background-color: #fff;
+    /* Latar belakang tabel putih */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Memberikan efek bayangan untuk tabel */
+
+    margin: 0 auto;
+    /* Tetap di tengah */
+
+
+}
+table.detail-table {
+    width: 80%; /* Menggunakan lebar otomatis */
+    margin-top: 60px !important;
+    
+    
+}
+
+
+table.table th,
+table.table td {
+    padding: 12px;
+    /* Memberikan jarak pada teks agar tidak terlalu rapat dengan border */
+    text-align: left;
+    /* Mengatur teks agar rata kiri */
+    border: 1px solid #ddd;
+    /* Memberikan border halus pada sel */
+}
+
+table.table th {
+    background-color: #4A628A;
+    /* Warna latar belakang header tabel */
+    color: white;
+    /* Warna teks header putih */
+    font-weight: bold;
+    /* Membuat teks di header lebih tebal */
+}
+
+table.table td {
+    background-color: #fafafa;
+    /* Latar belakang sel tabel */
+}
+
+table.table tr:nth-child(even) {
+    background-color: #f9f9f9;
+    /* Memberikan warna latar belakang berbeda untuk baris genap */
+}
+
+table.table tr:nth-child(odd) {
+    background-color: #fff;
+    /* Warna latar belakang untuk baris ganjil */
+}
+
+table.table td strong {
+    color: #333;
+    /* Memberikan warna untuk teks yang ditebalkan */
+    font-size: 1.1em;
+    /* Membuat teks yang ditebalkan sedikit lebih besar */
+}
+
+table.table td {
+    font-size: 1em;
+    /* Ukuran font normal untuk konten tabel */
+}
+
+
+
+
+
+/* Menambah padding kiri-kanan untuk kolom tabel yang lebih panjang */
+table.table td:first-child {
+    padding-left: 20px;
+    /* Memberikan jarak kiri pada kolom pertama */
+}
+
+table.table td:last-child {
+    padding-right: 20px;
+    /* Memberikan jarak kanan pada kolom terakhir */
+}
+
+.back-to-dashboard {
+    margin-left: 20px;
+    /* Sesuaikan dengan lebar label agar rata kiri */
+    margin-top: 10px;
+    /* Jarak dari elemen di atasnya */
+    text-align: left;
+    /* Rata kiri */
+    font-size: 14px !important;
+    padding: 5px 10px !important;
+    border-radius: 3px !important;
+}
+thead th.center {
+    text-align: center;
+}
+
+
+
+
+/* Kontainer utama */
+.detail-container {
+    width: 100%;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    /* Menyusun item dalam kolom */
+
+}
+
+/* Styling untuk setiap item detail */
+.detail-item {
+    display: flex; /* Menjaga elemen dalam satu baris */
+    align-items: center; /* Menyelaraskan elemen vertikal di tengah */
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+/* Styling untuk label */
+.detail-item .label {
+    min-width: 180px;
+    font-weight: bold;
+    margin-right: 5px;
+    text-align: left;
+}
+
+/* Styling untuk titik dua */
+.detail-item .colon {
+    margin-right: 5px;
+}
+
+/* Styling untuk nilai */
+.detail-item span {
+    text-align: left;
+    word-wrap: break-word;
+}
+
+
+
+.table-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.table {
+    width: 8 0% !important;
+    margin: 0 auto;
+    /* Tetap di tengah */
+    background-color: #f9f9f9;
+    /* Opsional: Tambahkan latar belakang */
+}
+
+.table th,
+.table td {
+    text-align: left;
+    /* Atur teks rata kiri */
+    padding: 10px;
+    /* Beri padding */
+}
+
+.table th {
+    background-color: #e9ecef;
+    /* Opsional: Warna header */
+}
+
+table.table td:hover, table.table tr:hover {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+.table-container {
+    max-height: 500px; /* Atur tinggi maksimal untuk kontainer tabel */
+    overflow-y: auto; /* Aktifkan scroll vertikal */
+}
+
+.table {
+    margin-bottom: 20; /* Hilangkan margin bawah tabel */
+}
+
+
+
+
+
+

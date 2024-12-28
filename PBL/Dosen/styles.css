@@ -1,0 +1,74 @@
+body {
+    background: linear-gradient(to bottom, #DFF2EB, #4A628A);
+    height: 100vh;
+}
+
+.sidebar {
+    height: 100vh;
+    background-color: #EEF7FF;
+    padding-top: 20px;
+}
+
+.sidebar h4 {
+    text-align: center;
+    color: #2d5a89;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.sidebar img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: auto;
+    display: block;
+}
+
+.nav-link {
+    color: #333;
+    font-size: 16px;
+}
+
+.nav-link.active {
+    background-color: #2d5a89;
+    color: white;
+    border-radius: 5px;
+}
+
+.nav-link i {
+    margin-right: 10px;
+}
+
+.content {
+    padding: 30px;
+}
+
+.welcome-card {
+    background-color: #2d5a89;
+    color: white;
+    border-radius: 8px;
+}
+
+.welcome-card button {
+    background-color: white;
+    color: #2d5a89;
+    border-radius: 5px;
+}
+
+.welcome-card button:hover {
+    background-color: #f0f0f0;
+    transition: 0.3s ease-in-out;
+}
+
+.modal-dialog {
+    max-width: 800px;
+}
+
+.modal-content {
+    background-color: #f8f9fa;
+}
+
+.modal-footer .btn {
+    border-radius: 5px;
+}

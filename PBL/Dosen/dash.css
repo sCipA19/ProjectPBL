@@ -1,0 +1,144 @@
+/* Background halaman */
+body {
+    background: linear-gradient(to bottom, #DFF2EB, #4A628A);
+}
+
+/* Styling Sidebar */
+
+.sidebar {
+    height: 100vh;
+    background-color: #EEF7FF;
+    padding-top: 20px;
+}
+
+/* Heading sidebar */
+
+.sidebar h4 {
+    text-align: center;
+    color: #2d5a89;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+
+
+/* Styling gambar profil di sidebar */
+.sidebar .profile img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: auto;
+    display: block;
+}
+
+
+/* Styling nama profil di sidebar */
+.sidebar .profile h5 {
+    text-align: center;
+}
+
+
+/* Styling link sidebar */
+.sidebar .nav-link {
+    font-size: 16px;
+    color: #333;
+    margin: 3px 0; /* Mengurangi jarak antar tombol */
+    padding-top: 5px;  /* Menurunkan padding atas */
+    padding-bottom: 5px;  /* Menurunkan padding bawah */
+}
+
+
+
+/* Styling untuk link aktif di sidebar */
+.sidebar .nav-link.active {
+    background-color: #2d5a89;
+    color: white;
+    border-radius: 5px;
+}
+
+/* Styling icon di sidebar */
+.sidebar .nav-link i {
+    margin-right: 10px;
+}
+
+.content {
+    padding: 30px;
+}
+/* Badge untuk status */
+.badge-success {
+    background-color: #28a745;
+}
+
+.badge-danger {
+    background-color: #dc3545;
+}
+
+/* Styling header tabel */
+th {
+    background-color: #4A628A !important; 
+    color: white !important;
+}
+
+/* Styling untuk seluruh kolom dalam tabel */
+.table th, .table td {
+    padding: 12px; /* Menambah jarak antar teks dan border */
+}
+
+/* Menjaga agar kolom No., NIM, Nama Mahasiswa, Kelas dan Status rata tengah */
+.table th:nth-child(1), .table td:nth-child(1),
+.table th:nth-child(2), .table td:nth-child(2),
+.table th:nth-child(3), .table td:nth-child(3),
+.table th:nth-child(4), .table td:nth-child(4),
+.table th:nth-child(7), .table td:nth-child(7) {
+    text-align: center; /* Mengatur agar teks pada kolom tersebut rata tengah */
+}
+
+/* Kolom Nama Pelanggaran dan Deskripsi lebih lebar dan teks terbungkus */
+.table th:nth-child(5), .table td:nth-child(5),
+.table th:nth-child(6), .table td:nth-child(6) {
+    text-align: left; /* Menyusun teks ke kiri */
+    word-wrap: break-word; /* Agar teks panjang dibungkus ke baris berikutnya */
+    white-space: normal; /* Agar teks bisa pindah baris jika panjang */
+    max-width: 350px; /* Mengatur lebar maksimal kolom untuk Nama Pelanggaran dan Deskripsi */
+}
+
+/* Mengatur tinggi baris agar seragam */
+.table td, .table th {
+    vertical-align: middle; /* Menjaga elemen dalam baris sejajar secara vertikal */
+}
+
+/* Efek hover pada baris tabel */
+.table tbody tr:hover {
+    background-color: #f8f9fa; /* Memberikan latar belakang saat hover */
+}
+
+/* Mengatur border kanan antar kolom */
+.table th, .table td {
+    border-right: 1px solid #ddd; /* Memberikan batas kanan antar kolom */
+}
+
+/* Menghapus border kanan pada kolom terakhir */
+.table td:last-child, .table th:last-child {
+    border-right: none;
+}
+
+/* Memberikan warna latar belakang pada baris tabel */
+.table-primary {
+    background-color: #e7f3fe; /* Memberikan latar belakang biru muda pada header */
+}
+
+/* Memberikan styling pada badge */
+.badge-danger {
+    background-color: #dc3545; /* Merah untuk status 'Proses' */
+    color: white;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.badge-success {
+    background-color: #28a745; /* Hijau untuk status 'Selesai' */
+    color: white;
+    padding: 5px 10px;
+    font-size: 14px;
+}

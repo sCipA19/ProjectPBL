@@ -1,0 +1,319 @@
+/* Styling untuk Sidebar */
+.sidebar {
+    width: 20%;
+    background-color: #EEF7FF;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav-link {
+    color: #333;
+    margin: 10px 0;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    font-weight: bold;
+    color: #007bff;
+    background-color: #cfe8ff;
+}
+
+/* Styling untuk Dropdown Menu */
+.dropdown-container {
+    display: none; /* Menyembunyikan dropdown menu secara default */
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    width: 200px; /* Lebar dropdown */
+    border-radius: 5px;
+    top: 40px;
+    z-index: 10;
+}
+
+.notification-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notification-list li {
+    margin: 10px 0;
+}
+
+.notification-list a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.notification-list a:hover {
+    background-color: #cfe8ff;
+    color: #007bff;
+}
+
+/* Styling untuk Main Content */
+#main-content {
+    width: 80%;
+    padding: 20px;
+    background: linear-gradient(to bottom, #DFF2EB, #4A628A);
+    overflow-y: auto;
+}
+
+.form-control {
+    width: 100%;
+    max-width: 800px;
+    padding: 5px;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+/* Styling untuk Tabel */
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: #ffffff; /* Pastikan latar belakang tabel tidak transparan */
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* Baris genap dengan latar belakang abu-abu */
+}
+
+th {
+    background-color: #4A628A !important; /* Pastikan header tabel memiliki latar belakang yang solid */
+    color: white;
+}
+td {
+    vertical-align: middle; /* Menyelaraskan teks di tengah secara vertikal */
+}
+
+/* Styling untuk Tombol Kembali */
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+.btn {
+    width: auto; /* Lebar tombol mengikuti teks */
+    padding: 0.100rem 0.40rem; /* Padding yang konsisten */
+    font-size: 1rem; /* Ukuran font yang konsisten */
+    height: auto; /* Menyesuaikan tinggi tombol */
+    display: inline-flex; /* Membuat tombol inline-flex */
+    justify-content: center; /* Menyelaraskan teks di tengah */
+    align-items: center; /* Menyelaraskan tombol secara vertikal */
+}
+
+
+/* Menetapkan ukuran tombol yang konsisten */
+button {
+    width: auto; /* Lebar tombol mengikuti teks */
+    padding: 0.100rem 0.40rem; /* Padding yang konsisten */
+    font-size: 1rem; /* Ukuran font yang konsisten */
+    height: auto; /* Menyesuaikan tinggi tombol */
+    display: inline-flex; /* Membuat tombol inline-flex */
+    justify-content: center; /* Menyelaraskan teks di tengah */
+    align-items: center; /* Menyelaraskan tombol secara vertikal */
+}
+
+/* Tombol dengan status 'Accepted' (btn-secondary) */
+button.btn-secondary {
+    padding: 0.100rem 0.40rem; /* Padding yang sama seperti tombol 'Accept' */
+    font-size: 1rem; /* Ukuran font seragam */
+    height: auto; /* Menyesuaikan tinggi tombol */
+}
+
+/* Tombol dengan status 'Accept' (btn-success) */
+button.btn-success {
+    padding: 0.375rem 0.75rem; /* Padding seragam */
+    font-size: 1rem; /* Ukuran font seragam */
+    height: auto; /* Menyesuaikan tinggi tombol */
+}
+
+/* Mengatur lebar kolom agar sesuai */
+.table th, .table td {
+    padding: 10px; /* Memberikan jarak antar teks dan border */
+}
+
+/* Kolom No., NIM, Nama Mahasiswa, Kelas, dan Aksi tetap rata tengah */
+.table th:nth-child(1), .table td:nth-child(1),
+.table th:nth-child(2), .table td:nth-child(2),
+.table th:nth-child(3), .table td:nth-child(3),
+.table th:nth-child(4), .table td:nth-child(4),
+.table th:nth-child(7), .table td:nth-child(7) {
+    text-align: center;
+}
+
+/* Kolom Nama Pelanggaran dan Deskripsi akan lebih lebar dan teks terbungkus */
+.table th:nth-child(5), .table td:nth-child(5),
+.table th:nth-child(6), .table td:nth-child(6) {
+    text-align: left; /* Menyusun teks ke kiri agar tidak rata tengah */
+    word-wrap: break-word; /* Agar teks panjang yang tidak muat tetap dibungkus ke baris berikutnya */
+    white-space: normal; /* Membuat teks tidak memanjang */
+    max-width: 350px; /* Maksimal lebar kolom jika diperlukan */
+}
+
+/* Memberikan padding lebih pada kolom Nama Pelanggaran dan Deskripsi agar lebih lebar */
+.table th:nth-child(5), .table td:nth-child(5),
+.table th:nth-child(6), .table td:nth-child(6) {
+    padding: 15px; /* Menambah padding untuk kolom ini */
+}
+
+/* Mengatur tinggi baris agar seragam */
+.table td, .table th {
+    vertical-align: middle; /* Menjaga semua elemen dalam baris sejajar secara vertikal */
+}
+
+/* Agar tombol Accept dan Accepted tetap sama ukurannya */
+.table td button {
+    width: 100%; /* Membuat tombol mengisi lebar kolom */
+}
+
+/* Menyusun ulang lebar kolom */
+.table th, .table td {
+    padding: 10px; /* Memberikan jarak antar teks dan border */
+}
+
+/* Untuk memberi efek hover pada baris tabel */
+.table tbody tr:hover {
+    background-color: #f8f9fa; /* Memberikan latar belakang saat hover */
+}
+
+/* Menambah jarak antar kolom agar tampilan lebih rapi */
+.table th, .table td {
+    border-right: 1px solid #ddd; /* Memberikan batas kanan antar kolom */
+}
+
+/* Menghapus batas kanan pada kolom terakhir */
+.table td:last-child, .table th:last-child {
+    border-right: none;
+}
+.form-background {
+    background-color: #f8f9fa; /* Warna latar belakang */
+    padding: 20px; /* Jarak di dalam div */
+    border-radius: 10px; /* Sudut melengkung */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Efek bayangan */
+}
+
+.breakable-col {
+    white-space: normal; /* Izinkan teks membungkus */
+    word-wrap: break-word; /* Pisahkan teks saat mencapai batas kolom */
+    word-break: break-word; /* Pisahkan teks jika ada kata panjang */
+    max-width: 150px; /* Atur lebar maksimal kolom (opsional) */
+}
+
+
+.small-col {
+    width: 120px; /* Atur lebar kolom sesuai kebutuhan */
+    word-wrap: break-word;
+}
+
+.small-col,
+.small-col-tingkat {
+    width: 0.1%; /* Lebar kolom */
+    text-align: center !important; /* Untuk memastikan isi kolom rata tengah */
+}
+
+.table-wrapper {
+    max-height: 650px; /* Tentukan tinggi maksimum tabel */
+    overflow-y: auto;  /* Agar tabel bisa di-scroll secara vertikal */
+    margin-top: 20px;
+}
+
+/* Tambahkan kelas ini di bagian CSS Anda */
+.btn-clicked {
+    background-color: #6c757d; /* Warna abu-abu untuk tombol yang sudah diklik */
+    color: white;
+    cursor: not-allowed; /* Mengubah kursor untuk menunjukkan bahwa tombol sudah tidak aktif */
+}
+
+.btn-success:disabled,
+.btn-danger:disabled {
+    background-color: #6c757d !important; /* Mengubah warna latar belakang tombol yang dinonaktifkan */
+    color: white !important;
+}
+
+button.border-0.bg-transparent:hover {
+    transform: scale(1.1); /* Membuat tombol sedikit membesar */
+    filter: brightness(1.2); /* Meningkatkan kecerahan */
+    cursor: pointer; /* Menambahkan pointer untuk memperjelas klik */
+}
+
+/* Tombol accept (centang hijau) */
+button.border-0.bg-transparent i.bi-check-circle-fill:hover {
+    color: #28a745; /* Warna hijau lebih terang saat hover */
+}
+
+/* Tombol reject (silang merah) */
+button.border-0.bg-transparent i.bi-x-circle-fill:hover {
+    color: #dc3545; /* Warna merah lebih terang saat hover */
+}
+
+/* Untuk tombol yang dinonaktifkan */
+button.border-0.bg-transparent:disabled:hover {
+    cursor: not-allowed; /* Mengubah kursor menjadi tanda larangan */
+    transform: none; /* Tidak ada efek transformasi */
+    filter: brightness(1); /* Tidak ada perubahan kecerahan */
+}
+button.clicked {
+    background-color: #e0e0e0; /* Warna abu-abu */
+    color: #6c757d; /* Warna teks lebih gelap */
+    pointer-events: none; /* Nonaktifkan interaksi */
+}
+button.disabled {
+    background-color: #e0e0e0; /* Warna abu-abu */
+    color: #6c757d; /* Warna teks lebih gelap */
+    pointer-events: none; /* Nonaktifkan klik */
+    border: none; /* Hilangkan border */
+}
+.table-responsive {
+    max-height: 550px !important;
+    overflow-y: auto;
+    
+}
+
+/* Menambahkan margin-top pada container tabel */
+.table-container {
+    max-height: 450px; /* Tentukan tinggi maksimal tabel */
+    overflow-y: auto;  /* Aktifkan scroll vertikal */
+    margin-top: 50px;  /* Menambahkan jarak dari bagian atas */
+}
+/* Mengatur posisi teks/ikon di tengah untuk kolom Aksi */
+.table th:nth-child(5), .table td:nth-child(5) {
+    text-align: center; /* Meratakan teks/ikon di tengah */
+}
+/* Mengatur posisi teks/ikon di tengah untuk kolom Aksi */
+.table th:nth-child(6), .table td:nth-child(6) {
+    text-align: center; /* Meratakan teks/ikon di tengah */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
